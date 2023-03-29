@@ -15,25 +15,18 @@ echo '
 
 <p>Fill this form to change task</p>
 <form method="post">
-<!--
     <div class="mb-3">
-    <select name="newState" id="newState" class="form-select" aria-label="Default select example">
-                            <option selected>Open this select menu</option>
+    <select name="newState"  class="form-select" aria-label="Default select example">
+                            <option selected>select</option>
                             <option value="0">not done</option>
                             <option value="1">done</option>
     </select>
-    <div>
-        <button type="submit" name="changeState" class="btn btn-outline-secondary"><a href="index.php">Change state</a></button>
-</div>
--->
 
         <label for="username" class="form-label">new task</label>
         <input name="taskName" class="form-control">
     </div>
-    <button type="submit" name="change" class="btn btn-outline-secondary">Change</button>
-<!--
+    <button type="submit" name="change" class="btn btn-outline-secondary">Change</a></button>
      <button type="submit" name="back" class="btn btn-outline-secondary">Back</button>
--->
 
 </form>
 </body>
@@ -44,12 +37,34 @@ if (isset($_POST['change'])){
     require "config.php";
 
     $task = $_POST["taskName"];
+    $state = $_POST["newState"];
     $id = $_GET["id"];
-    $request = "UPDATE tasklist SET task=? WHERE id=?";
+    echo $state;
 
-    $result = $pdo->prepare($request);
-    $result->execute([$task, $id]);
+    if ($state == "select"){
+        $request = "UPDATE tasklist SET task=? WHERE id=?";
+
+        $result = $pdo->prepare($request);
+        $result->execute([$task, $id]);
+    }
+    elseif ($task == ""){
+        $request = "UPDATE tasklist SET state=? WHERE id=?";
+
+        $result = $pdo->prepare($request);
+        $result->execute([$state, $id]);
+    }
+    else{
+        $request = "UPDATE tasklist SET task=?, state=? WHERE id=?";
+
+        $result = $pdo->prepare($request);
+        $result->execute([$task, $state, $id]);
+
+    }
     header("Location: index.php");
 
+}
+
+if (isset($_POST['back'])){
+    header("Location: index.php");
 }
 ?>

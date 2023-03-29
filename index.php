@@ -77,7 +77,4 @@ if ($_SESSION == null){
 
 </html>
 <?php
-//if (isset($_POST['task'])){
-//    echo "<script>alert('Форма отправлена!');</script>";
-//}
 ?>
