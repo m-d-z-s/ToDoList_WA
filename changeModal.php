@@ -66,5 +66,6 @@ if (isset($_POST['change'])){
 
 if (isset($_POST['back'])){
     header("Location: index.php");
+    session_destroy();
 }
 ?>

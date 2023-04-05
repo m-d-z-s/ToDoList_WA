@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if ($_SESSION == null){
+if ($_SESSION == null) {
     header("Location: signUp.php");
 }
 ?>
@@ -23,6 +23,9 @@ if ($_SESSION == null){
 <a class="btn btn-primary" href="signUp.php" role="button">sign up</a>
 <a class="btn btn-primary" href="login.php" role="button">login</a>
 <a href="logout.php" class="btn btn-outline-secondary" name="signOut">Sign Out</a>
+<form method="post">
+    <button type="button" name="theme" class="btn btn-outline-warning"><i class="fa-solid fa-toggle-on"></i></button>
+</form>
 <div class="modal-footer">
     <form action="addTask.php" method="post">
         <input type="text" name="task">
@@ -43,32 +46,32 @@ if ($_SESSION == null){
         </thead>
         <tbody class="table-group-divider">
         <?php
-        require "config.php";
-        $request = "SELECT id, task, state FROM tasklist WHERE login = ?";
+            require "config.php";
+            $request = "SELECT id, task, state FROM tasklist WHERE login = ?";
 
-        $result = $pdo->prepare($request);
-        $result->execute([$_SESSION['login']]);
+            $result = $pdo->prepare($request);
+            $result->execute([$_SESSION['login']]);
 
-        foreach ($result as $row){
-            echo '<tr>
+            foreach ($result as $row) {
+
+                echo '<tr>
+                        <td>';
+                            if($row['state'] == 0) echo "not done";
+                            else echo "done";
+                  echo '</td> 
                         <td>
-                        '. $row['state'] .'
+                            '. $row['task'] .'
                         </td>
-                    
-            <td>
-            '. $row['task'] .'
-            </td>
-            <td>
-            <a href="changeModal.php?id='.$row['id'].'">
-                <button type="button" class="btn btn-outline-success"><i class="fa-solid fa-pen"></i></button>
-            </a>
-            <a href="delete.php?id='.$row['id'].'">
-                <button type="button" class="btn btn-outline-danger"><i class="fa-solid fa-trash"></i></input>
-            </a>
-            </td>
-        </tr>
-';
-        }
+                        <td>
+                            <a href="changeModal.php?id=' . $row['id'] . '">
+                                <button type="button" class="btn btn-outline-success"><i class="fa-solid fa-pen"></i></button>
+                            </a>
+                            <a href="delete.php?id=' . $row['id'] . '">
+                                <button type="button" class="btn btn-outline-danger"><i class="fa-solid fa-trash"></i></input>
+                            </a>
+                        </td>
+                    </tr>';
+            }
         ?>
 
         </tbody>
@@ -77,4 +80,24 @@ if ($_SESSION == null){
 
 </html>
 <?php
+if (isset($_SESSION['theme'])) {
+    $theme = $_SESSION['theme'];
+} else {
+    $theme = 'light';
+}
+
+if (isset($_POST['theme'])) {
+    echo 'hi';
+
+    if ($theme == 'light') {
+        $theme = 'dark';
+    } else {
+        $theme = 'light';
+    }
+    // Сохраняем новое значение в сессии
+    $_SESSION['theme'] = $theme;
+    echo "<link rel='stylesheet' type='text/css' href='$theme.css'>";
+
+}
+
 ?>
