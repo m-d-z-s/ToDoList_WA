@@ -18,9 +18,21 @@ echo '
   </style>
 
   <script>
-    let button = document.getElementById("toggle-theme");
+    let button = document.getElementById("theme-button");
+        let lightTheme = "light.css";
+        let darkTheme = "dark.css";
+
+        var currTheme = lightTheme;
+        var theme = "";
+
     button.addEventListener("click", function() {
-      document.documentElement.classList.toggle("dark-theme");
+            if (currTheme === lightTheme) {
+      document.documentElement.classList.toggle("light-theme");
+    } else {
+              document.documentElement.classList.toggle("dark-theme");
+
+    }
+
     });
   </script>
 
@@ -54,18 +66,5 @@ if (isset($_POST['change_theme'])) {
 }
 
 // Подключаем файл стилей в зависимости от значения переменной $theme
-echo "<link rel='stylesheet' type='text/css' href='styles/$theme.css'>";
+echo "<link rel='stylesheet' type='text/css' href='$theme.css'>";
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Site with dark and light theme</title>
-</head>
-<body>
-<h1>Привет, мир!</h1>
-<p>Это пример сайта с темной и светлой темой.</p>
-<form method="post">
-    <button type="submit" name="change_theme">Сменить тему</button>
-</form>
-</body>
-</html>

@@ -1,13 +1,23 @@
+/*body {*/
+/*    background-color: white;*/
+/*    color: black;*/
+/*}*/
+
+/*h1 {*/
+/*    font-size: 36px;*/
+/*}*/
+
+:root {
+    --bg-color: white;
+    --text-color: black;
+}
+
+.dark-mode {
+    --bg-color: black;
+    --text-color: white;
+}
+
 body {
-    background-color: white;
-    color: black;
-}
-
-h1 {
-    font-size: 36px;
-}
-
-button {
-    background-color: blue;
-    color: white;
+    background-color: var(--bg-color);
+    color: var(--text-color);
 }
